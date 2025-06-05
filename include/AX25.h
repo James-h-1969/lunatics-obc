@@ -12,6 +12,12 @@ enum RequestType {
     GET,
 };
 
+enum DataType {
+    WOD_DATA = 0x0E,      
+    SCIENCE_DATA = 0x0F,
+    ATTITUDE_DATA = 0x09
+};
+
 class AX25 {
     /*
     This class holds the logic required to send the requests to the server.a64l

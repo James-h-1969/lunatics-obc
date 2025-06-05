@@ -29,7 +29,7 @@ void Communication::send_payload_data(std::vector<float> recording, std::time_t 
     std::ostringstream json_stream;
     json_stream << "{"
                 << "\"time_utc\": \"" << utc_time << "\", "
-                << "\"data_type\": \"PAYLOAD_DATA\", "
+                << "\"data_type\": \"" << DataType::SCIENCE_DATA << "\", "
                 << "\"data\": " << data_array
                 << "}";
 
@@ -61,7 +61,7 @@ void Communication::send_attitude_data(std::vector<float> recording, std::time_t
     std::ostringstream json_stream;
     json_stream << "{"
                 << "\"time_utc\": \"" << utc_time << "\", "
-                << "\"data_type\": \"ATTITUDE_DATA\", "
+                << "\"data_type\": \"" << DataType::ATTITUDE_DATA << "\", "
                 << "\"data\": " << data_array
                 << "}";
 
@@ -93,7 +93,7 @@ void Communication::send_wod_data(struct WODRecording recording, std::time_t cur
     json_stream << "\"temp_battery\": " << recording.battery_temp;
     json_stream << "}, "; 
 
-    json_stream << "\"data_type\": \"WOD_DATA\"";
+    json_stream << "\"data_type\": \"" << DataType::WOD_DATA;
     json_stream << "}";
 
     std::string post_body = json_stream.str();

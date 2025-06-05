@@ -23,22 +23,6 @@ int main() {
     // create interface
     AS7265X sensor(&i2c);
         
-    // Check if sensor is connected
-    if (!sensor.isConnected()) {
-        std::cerr << "AS7265X sensor not found!" << std::endl;
-        return 1;
-    }
-    
-    std::cout << "AS7265X sensor found!" << std::endl;
-    
-    // Initialize the sensor
-    if (!sensor.begin()) {
-        std::cerr << "Failed to initialize AS7265X sensor!" << std::endl;
-        return 1;
-    }
-
-    std::cout << "Initialised sensor!" << std::endl;
-
     // create all the objects
     FSM fsm = FSM();
     Communication comms = Communication();

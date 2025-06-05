@@ -487,7 +487,16 @@ class Payload {
     This class is used to abstract taking measurements from the payload.
     */
     public:
-        Payload(const AS7265X& sensor) : sensor_(sensor) {}
+        Payload(const AS7265X& sensor) : sensor_(sensor) {
+            if (!sensor_.isConnected()) {
+                std::cerr << "AS7265X sensor not found!" << std::endl;
+            };         
+            std::cout << "AS7265X sensor found!" << std::endl;
+            if (!sensor_.begin()) {
+                std::cerr << "Failed to initialize AS7265X sensor!" << std::endl;
+            };
+            std::cout << "Initialised sensor!" << std::endl;
+        }
         void take_reading(std::time_t current_time);
         void remove_before_time(std::time_t time_input);
         std::vector<struct PayloadReading> get_payload_storage();
