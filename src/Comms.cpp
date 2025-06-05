@@ -2,6 +2,9 @@
 
 std::string Communication::request_state() {
     std::string response = ax25_client_.send_data(GET, "state");
+    if (response.empty()){
+        return "INIT";
+    }
     json j = json::parse(response);
     std::string state_value = j["state"];
     return state_value;
@@ -104,6 +107,9 @@ void Communication::send_wod_data(struct WODRecording recording, std::time_t cur
 
 void Communication::request_if_reset_required(Payload& payload) {
     std::string response = ax25_client_.send_data(GET, "to_reset");
+    if (response.empty()){
+        return;
+    }
     json j = json::parse(response);
 
     bool to_reset = j["to_reset"];

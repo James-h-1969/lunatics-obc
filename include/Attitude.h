@@ -11,7 +11,7 @@
 class Attitude {
     public:
         std::vector<float> take_attitude_recording();
-        void Attitude::set_attitude_state(enum State state, GPIOControl gpio);
+        void set_attitude_state(enum State state, GPIOControl gpio);
 };
 
 # endif

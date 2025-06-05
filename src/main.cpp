@@ -25,14 +25,15 @@ int main() {
         
     // create all the objects
     FSM fsm = FSM();
-    Communication comms = Communication();
+    AX25 ax25_client = AX25(gpio);
+    Communication comms = Communication(ax25_client);
     RTC rtc = RTC(comms);
     WOD wod = WOD();
     Attitude attitude = Attitude();
     Payload payload = Payload(sensor);
 
      // setup the loop
-    enum State current_state = fsm.poll_state(comms, gpio);
+    enum State current_state = fsm.poll_state(comms, gpio, attitude);
     std::time_t start_time = rtc.get_time(); // handles sending WOD every 32 minutes
     std::time_t interval_time = start_time; // handles recording WOD every minute
     std::time_t current_time = start_time; 

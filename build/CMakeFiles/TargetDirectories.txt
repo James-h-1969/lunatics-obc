@@ -1,0 +1,9 @@
+/home/jhocking542/space-3-code/lunatics-OBC-2/build/CMakeFiles/rpi_program.dir
+/home/jhocking542/space-3-code/lunatics-OBC-2/build/CMakeFiles/run.dir
+/home/jhocking542/space-3-code/lunatics-OBC-2/build/CMakeFiles/clean-build.dir
+/home/jhocking542/space-3-code/lunatics-OBC-2/build/CMakeFiles/edit_cache.dir
+/home/jhocking542/space-3-code/lunatics-OBC-2/build/CMakeFiles/rebuild_cache.dir
+/home/jhocking542/space-3-code/lunatics-OBC-2/build/CMakeFiles/list_install_components.dir
+/home/jhocking542/space-3-code/lunatics-OBC-2/build/CMakeFiles/install.dir
+/home/jhocking542/space-3-code/lunatics-OBC-2/build/CMakeFiles/install/local.dir
+/home/jhocking542/space-3-code/lunatics-OBC-2/build/CMakeFiles/install/strip.dir
