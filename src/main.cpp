@@ -48,7 +48,7 @@ int main() {
 
         if (seconds_between_poll > STATE_POLLING_TIME) {
             std::cout << "Polling the state and reset!" << std::endl;
-            current_state = fsm.poll_state(comms, gpio);
+            current_state = fsm.poll_state(comms, gpio, attitude);
             comms.request_if_reset_required(payload);
             poller_time = current_time;
 

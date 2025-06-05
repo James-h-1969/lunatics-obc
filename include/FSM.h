@@ -6,6 +6,7 @@
 #include <bitset>
 #include "GPIO.h"
 #include "Comms.h"
+#include "Attitude.h"
 #include "State.h"
 #include <iostream>
 
@@ -18,7 +19,7 @@ class FSM {
     */
     public:
         FSM(): current_state_(INIT), prev_state_(INIT) {};
-        enum State poll_state(Communication& comms, GPIOControl gpio);
+        enum State poll_state(Communication& comms, GPIOControl gpio, Attitude att);
         void set_current_state(enum State new_state) {current_state_ = new_state;};
         enum State get_current_state() {return current_state_;};
         void set_prev_state(enum State new_state) {prev_state_ = new_state;};

@@ -10,7 +10,7 @@ class GPIOControl {
             if (gpioInitialise() < 0) {
                 std::cerr << "pigpio init failed" << std::endl;
             };
-            int outputPins[] = {19, 20, 21};
+            int outputPins[] = {5, 6, 18, 19, 20, 21};
 
             for (int pin : outputPins) {
                 gpioSetMode(pin, PI_OUTPUT);
