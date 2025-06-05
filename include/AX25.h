@@ -6,6 +6,7 @@
 #include <iostream>
 #include <nlohmann/json.hpp>
 #include <ctime>
+#include "GPIO.h"
 
 enum RequestType {
     POST,
@@ -26,7 +27,7 @@ class AX25 {
     - https://gist.github.com/alghanmi/c5d7b761b2c9ab199157?permalink_comment_id=2046201
     */
     public:
-        AX25() {curl_ = curl_easy_init();};
+        AX25(GPIOControl& gpio) {curl_ = curl_easy_init();gpio_=gpio;};
         ~AX25() {curl_easy_cleanup(curl_);};
         std::string send_data(RequestType request_type, const std::string& url_params, const std::string& post_body = "");   
     private:
@@ -35,6 +36,8 @@ class AX25 {
         CURLcode res_;
         std::string readBuffer_;
         std::string base_url = "http://192.168.78.201:5000/";
+
+        GPIOControl gpio_;
 };
 
 # endif

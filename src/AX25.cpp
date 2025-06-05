@@ -7,6 +7,7 @@ static size_t write_callback(void *contents, size_t size, size_t nmemb, void *us
 };
 
 std::string AX25::send_data(RequestType request_type, const std::string& url_params, const std::string& post_data) {
+    gpio_.setGPIOState(18, "HIGH");
     if (!curl_) {
         std::cerr << "[ERROR] Curl not initialized." << std::endl;
         return "";  
@@ -66,6 +67,6 @@ std::string AX25::send_data(RequestType request_type, const std::string& url_par
     if (response_code < 200 || response_code >= 300) {
         std::cerr << "[WARNING] HTTP response code: " << response_code << std::endl;
     }
-    
+    gpio_.setGPIOState(18, "LOW");
     return readBuffer_;
 }
