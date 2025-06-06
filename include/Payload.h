@@ -501,6 +501,7 @@ class Payload {
         void remove_before_time(std::time_t time_input);
         std::vector<struct PayloadReading> get_payload_storage();
         void delete_all_payload_readings();
+        uint8_t get_payload_temp();
 
     private:
         std::vector<struct PayloadReading> payload_storage_;

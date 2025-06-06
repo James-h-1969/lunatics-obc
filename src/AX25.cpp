@@ -89,3 +89,25 @@ std::string AX25::send_data(RequestType request_type, const std::string& url_par
     gpio_.setGPIOState(18, "LOW");
     return readBuffer_;
 }
+
+int AX25::check_valid_ax25_header(const json& response_header) {
+    try {
+        // Check if required fields exist
+        if (!response_header.contains("source_address") || !response_header.contains("destination_address")) {
+            std::cout << "[ERROR] AX25 header missing required fields.\n" << std::endl;
+            return false;
+        }
+        
+        // Validate addresses (note: source and destination are swapped in response)
+        if (response_header["source_address"] != destination_address || 
+            response_header["destination_address"] != source_address) {
+            std::cout << "[ERROR] AX25 addresses were invalid.\n" << std::endl;
+            return false;
+        }
+        
+        return true;
+    } catch (const json::exception& e) {
+        std::cout << "[ERROR] JSON parsing error in AX25 header validation: " << e.what() << std::endl;
+        return false;
+    }
+}

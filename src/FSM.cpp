@@ -45,6 +45,10 @@ State FSM::poll_state(Communication& comms, GPIOControl gpio, Attitude att) {
     std::string polled_state_str = comms.request_state();
     State polled_state = this->string_state_to_enum(polled_state_str);
 
+    if (polled_state == NULL_STATE) {
+        return (this->get_current_state());
+    }
+
     // if required, change the LEDs
     if (polled_state != this->get_current_state()) {
         std::cout << "Changing state from " << this->get_current_state() << " to " << polled_state << std::endl;

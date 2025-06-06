@@ -40,7 +40,7 @@ int main() {
     std::time_t poller_time = start_time; // handles polling the state every 5s
 
     printf("Beginning the loop...\n");
-    wod.take_WOD_recording_and_log(current_time, current_state);
+    wod.take_WOD_recording_and_log(current_time, current_state, payload);
     comms.request_if_reset_required(payload);
 
     while (true) {
@@ -50,6 +50,11 @@ int main() {
         if (seconds_between_poll > STATE_POLLING_TIME) {
             std::cout << "Polling the state and reset!" << std::endl;
             current_state = fsm.poll_state(comms, gpio, attitude);
+
+            if (current_state == POWER_OFF) {
+                break;
+            }
+
             comms.request_if_reset_required(payload);
             poller_time = current_time;
 
@@ -68,7 +73,7 @@ int main() {
         // take a WOD recording every 60s 
         double seconds_between_interval = std::difftime(current_time, interval_time);
         if (seconds_between_interval >= SECONDS_IN_A_MINUTE) {
-            wod.take_WOD_recording_and_log(current_time, current_state);
+            wod.take_WOD_recording_and_log(current_time, current_state, payload);
             interval_time = current_time;
         }
 

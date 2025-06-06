@@ -9,6 +9,7 @@
 #include <iostream>
 
 #include "State.h"
+#include "Payload.h"
 
 
 struct WODRecording {
@@ -27,7 +28,7 @@ class WOD {
     public:
         WOD(): max_size_(32) {};
         std::vector<struct WODRecording> get_current_storage();
-        void take_WOD_recording_and_log(std::time_t current_time,  enum State current_state);
+        void take_WOD_recording_and_log(std::time_t current_time,  enum State current_state, Payload payload);
         size_t max_size_;
     private:
         std::deque<struct WODRecording> current_storage_;

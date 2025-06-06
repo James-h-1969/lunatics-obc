@@ -13,11 +13,16 @@ enum RequestType {
     GET,
 };
 
+using json = nlohmann::json; 
+
 enum DataType {
     WOD_DATA = 0x0E,      
     SCIENCE_DATA = 0x0F,
     ATTITUDE_DATA = 0x09
 };
+
+static std::string source_address = "LTIC01"; // lunatics-satellite
+static std::string destination_address = "LTICGS"; // lunatics-ground-station
 
 class AX25 {
     /*
@@ -29,7 +34,8 @@ class AX25 {
     public:
         AX25(GPIOControl& gpio) {curl_ = curl_easy_init();gpio_=gpio;};
         ~AX25() {curl_easy_cleanup(curl_);};
-        std::string send_data(RequestType request_type, const std::string& url_params, const std::string& post_body = "");   
+        std::string send_data(RequestType request_type, const std::string& url_params, const std::string& post_body = ""); 
+        int check_valid_ax25_header(const json& response_header);
     private:
         // stuff for wifi requests
         CURL* curl_;

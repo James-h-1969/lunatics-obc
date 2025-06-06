@@ -112,6 +112,76 @@ public:
     int getFileDescriptor() const {
         return i2c_fd;
     }
+
+    std::vector<uint8_t> read_i2c_block_data(uint8_t address, uint8_t reg, int length) {
+        if (!address_set || current_address != address) {
+            if (ioctl(i2c_fd, I2C_SLAVE, address) < 0) {
+                throw std::runtime_error("Failed to set I2C slave address 0x" +
+                    std::to_string(address) + " - Error: " +
+                    std::string(strerror(errno)));
+            }
+            current_address = address;
+            address_set = true;
+        }
+        
+        // Write register address
+        if (write(i2c_fd, &reg, 1) != 1) {
+            throw std::runtime_error("Failed to write register address 0x" +
+                std::to_string(reg) + " - Error: " +
+                std::string(strerror(errno)));
+        }
+        
+        // Read block of data
+        std::vector<uint8_t> data(length);
+        if (read(i2c_fd, data.data(), length) != length) {
+            throw std::runtime_error("Failed to read " + std::to_string(length) + 
+                " bytes from register 0x" + std::to_string(reg) + 
+                " - Error: " + std::string(strerror(errno)));
+        }
+        
+        return data;
+    }
+
+    void write_i2c_block_data(uint8_t address, uint8_t reg, const std::vector<uint8_t>& data) {
+        if (!address_set || current_address != address) {
+            if (ioctl(i2c_fd, I2C_SLAVE, address) < 0) {
+                throw std::runtime_error("Failed to set I2C slave address 0x" +
+                    std::to_string(address) + " - Error: " +
+                    std::string(strerror(errno)));
+            }
+            current_address = address;
+            address_set = true;
+        }
+        
+        // Create buffer with register address + data
+        std::vector<uint8_t> buffer;
+        buffer.push_back(reg);
+        buffer.insert(buffer.end(), data.begin(), data.end());
+        
+        if (write(i2c_fd, buffer.data(), buffer.size()) != (int)buffer.size()) {
+            throw std::runtime_error("Failed to write " + std::to_string(data.size()) + 
+                " bytes to register 0x" + std::to_string(reg) + 
+                " - Error: " + std::string(strerror(errno)));
+        }
+    }
+
+    void write_byte(uint8_t address, uint8_t reg) {
+        if (!address_set || current_address != address) {
+            if (ioctl(i2c_fd, I2C_SLAVE, address) < 0) {
+                throw std::runtime_error("Failed to set I2C slave address 0x" +
+                    std::to_string(address) + " - Error: " +
+                    std::string(strerror(errno)));
+            }
+            current_address = address;
+            address_set = true;
+        }
+        
+        if (write(i2c_fd, &reg, 1) != 1) {
+            throw std::runtime_error("Failed to write register address 0x" +
+                std::to_string(reg) + " - Error: " +
+                std::string(strerror(errno)));
+        }
+    }
 };
 
 

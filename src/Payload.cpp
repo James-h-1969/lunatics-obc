@@ -57,3 +57,7 @@ void Payload::remove_before_time(std::time_t time_input) {
 void Payload::delete_all_payload_readings(){
     payload_storage_.clear();
 }
+
+uint8_t Payload::get_payload_temp() {
+    return (sensor_.getTemperatureAverage());
+}
